@@ -13,6 +13,8 @@ public record RegisterRequest(
         @NotNull(message = "Email is required")
         @Email(message = "Email is not valid")
         String email,
+        @NotNull(message = "Phone number is required")
+        String phone,
         @NotNull(message = "Password is required")
         String password
 ) {

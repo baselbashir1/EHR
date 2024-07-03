@@ -25,6 +25,7 @@ public class AuthService {
                 .username(registerRequest.username())
                 .email(registerRequest.email())
                 .password(passwordEncoder.encode(registerRequest.password()))
+                .phone(registerRequest.phone())
                 .role(UserRole.USER)
                 .build();
         userRepository.save(user);
