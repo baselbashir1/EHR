@@ -1,5 +1,6 @@
 package com.medical.ehr.controllers;
 
+import com.medical.ehr.dto.requests.LoginRequest;
 import com.medical.ehr.dto.requests.RegisterRequest;
 import com.medical.ehr.services.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +18,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody RegisterRequest registerRequest) {
-        try {
-            return new ResponseEntity<>(authService.register(registerRequest), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.FAILED_DEPENDENCY);
-        }
+        return new ResponseEntity<>(authService.register(registerRequest), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
+        return new ResponseEntity<>(authService.login(loginRequest), HttpStatus.OK);
     }
 
 }
