@@ -88,7 +88,7 @@ public class UserService implements UserDetailsService {
         return saveUser(user);
     }
 
-    public UserResponse addUser(AddUserRequest addUserRequest) {
+    public void addUser(AddUserRequest addUserRequest) {
         validateUser(addUserRequest.username(), addUserRequest.email());
         User user = User.builder()
                 .firstname(addUserRequest.firstname())
@@ -101,10 +101,9 @@ public class UserService implements UserDetailsService {
                 .build();
         Long userId = userRepository.save(user).getId();
         log.info("User {} added successfully.", userId);
-        return userMapper.mapToUserResponse(user);
     }
 
-    public UserResponse editUser(EditUserRequest editUserRequest, Long userId) {
+    public void editUser(EditUserRequest editUserRequest, Long userId) {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
         validateUser(editUserRequest.username(), editUserRequest.email());
@@ -117,7 +116,13 @@ public class UserService implements UserDetailsService {
         existingUser.setRole(editUserRequest.role());
         userRepository.save(existingUser);
         log.info("User {} updated successfully.", existingUser.getId());
-        return userMapper.mapToUserResponse(existingUser);
+    }
+
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        userRepository.delete(user);
+        log.info("User {} deleted successfully.", user.getId());
     }
 
 }

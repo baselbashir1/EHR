@@ -28,12 +28,19 @@ public class UserController {
 
     @PostMapping("/addUser")
     public ResponseEntity<Object> addUser(@RequestBody AddUserRequest addUserRequest) {
-        return new ResponseEntity<>(userService.addUser(addUserRequest), HttpStatus.CREATED);
+        userService.addUser(addUserRequest);
+        return new ResponseEntity<>("User added successfully.", HttpStatus.CREATED);
     }
 
     @PostMapping("/editUser/{userId}")
     public ResponseEntity<Object> editUser(@RequestBody EditUserRequest editUserRequest, @PathVariable("userId") Long userId) {
-        return new ResponseEntity<>(userService.editUser(editUserRequest, userId), HttpStatus.OK);
+        userService.editUser(editUserRequest, userId);
+        return new ResponseEntity<>("User updated successfully.", HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteUser/{userId}")
+    public ResponseEntity<Object> deleteUser(@PathVariable("userId") Long userId) {
+        userService.deleteUser(userId);
+        return new ResponseEntity<>("User deleted successfully.", HttpStatus.OK);
+    }
 }
