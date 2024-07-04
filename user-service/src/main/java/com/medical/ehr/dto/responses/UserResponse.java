@@ -6,8 +6,7 @@ import lombok.Builder;
 import java.util.Date;
 
 @Builder
-public record RegisterResponse(
-        String token,
+public record UserResponse(
         String firstname,
         String lastname,
         String username,
