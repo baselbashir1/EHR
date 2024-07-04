@@ -1,5 +1,7 @@
 package com.medical.ehr.controllers;
 
+import com.medical.ehr.dto.requests.AddUserRequest;
+import com.medical.ehr.dto.requests.EditUserRequest;
 import com.medical.ehr.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,16 @@ public class UserController {
     @GetMapping("/getByUsername")
     public ResponseEntity<Object> getUserByUsername(@RequestParam String username) {
         return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
+    }
+
+    @PostMapping("/addUser")
+    public ResponseEntity<Object> addUser(@RequestBody AddUserRequest addUserRequest) {
+        return new ResponseEntity<>(userService.addUser(addUserRequest), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/editUser/{userId}")
+    public ResponseEntity<Object> editUser(@RequestBody EditUserRequest editUserRequest, @PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(userService.editUser(editUserRequest, userId), HttpStatus.OK);
     }
 
 }

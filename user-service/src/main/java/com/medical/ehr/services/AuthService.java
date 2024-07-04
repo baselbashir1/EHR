@@ -23,10 +23,10 @@ public class AuthService {
     private final AuthMapper authMapper;
 
     public RegisterResponse register(RegisterRequest registerRequest) {
-        userService.validateUser(registerRequest);
+        userService.validateUser(registerRequest.username(), registerRequest.email());
 
         User user = userService.registerUser(registerRequest);
-        log.info("User {} saved successfully.", user.getId());
+        log.info("User {} registered successfully.", user.getId());
 
         String token = jwtUtil.generateToken(user);
         return authMapper.mapToRegisterResponse(user, token);
