@@ -4,7 +4,6 @@ import com.medical.ehr.dto.requests.LoginRequest;
 import com.medical.ehr.dto.requests.RegisterRequest;
 import com.medical.ehr.dto.responses.LoginResponse;
 import com.medical.ehr.dto.responses.RegisterResponse;
-import com.medical.ehr.enums.UserRole;
 import com.medical.ehr.mappers.AuthMapper;
 import com.medical.ehr.models.User;
 import com.medical.ehr.utils.JwtUtil;
@@ -26,12 +25,11 @@ public class AuthService {
     public RegisterResponse register(RegisterRequest registerRequest) {
         userService.validateUser(registerRequest);
 
-        User user = userService.createUser(registerRequest);
-        User savedUser = userService.saveUser(user);
-        log.info("User {} saved successfully.", savedUser.getId());
+        User user = userService.registerUser(registerRequest);
+        log.info("User {} saved successfully.", user.getId());
 
         String token = jwtUtil.generateToken(user);
-        return authMapper.mapToRegisterResponse(savedUser, token);
+        return authMapper.mapToRegisterResponse(user, token);
     }
 
     public LoginResponse login(LoginRequest loginRequest) {

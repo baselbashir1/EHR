@@ -71,8 +71,8 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public User createUser(RegisterRequest registerRequest) {
-        return User.builder()
+    public User registerUser(RegisterRequest registerRequest) {
+        User user = User.builder()
                 .firstname(registerRequest.firstname())
                 .lastname(registerRequest.lastname())
                 .username(registerRequest.username())
@@ -81,6 +81,7 @@ public class UserService implements UserDetailsService {
                 .phone(registerRequest.phone())
                 .role(UserRole.USER)
                 .build();
+        return saveUser(user);
     }
 
 }
