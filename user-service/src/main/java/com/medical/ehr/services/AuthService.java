@@ -2,7 +2,8 @@ package com.medical.ehr.services;
 
 import com.medical.ehr.dto.requests.LoginRequest;
 import com.medical.ehr.dto.requests.RegisterRequest;
-import com.medical.ehr.dto.responses.AuthResponse;
+import com.medical.ehr.dto.responses.LoginResponse;
+import com.medical.ehr.dto.responses.RegisterResponse;
 import com.medical.ehr.enums.UserRole;
 import com.medical.ehr.models.User;
 import com.medical.ehr.repositories.UserRepository;
@@ -25,7 +26,7 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
-    public AuthResponse register(RegisterRequest registerRequest) {
+    public RegisterResponse register(RegisterRequest registerRequest) {
 
         Optional<User> existingUsername = userRepository.findByUsername(registerRequest.username());
         Optional<User> existingEmail = userRepository.findByEmail(registerRequest.email());
@@ -50,10 +51,10 @@ public class AuthService {
         userRepository.save(user);
 
         String token = jwtUtil.generateToken(user);
-        return new AuthResponse(token);
+        return new RegisterResponse(token, user.getFirstname(), user.getLastname(), user.getUsername(), user.getEmail(), user.getPhone(), user.getRole());
     }
 
-    public AuthResponse login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password());
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
@@ -61,7 +62,7 @@ public class AuthService {
                 .orElseThrow(() -> new UsernameNotFoundException("Username or password incorrect."));
 
         String token = jwtUtil.generateToken(user);
-        return new AuthResponse(token);
+        return new LoginResponse(token);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.medical.ehr.dto.responses;
 
-public record AuthResponse(
+public record LoginResponse(
         String token
 ) {
 }
