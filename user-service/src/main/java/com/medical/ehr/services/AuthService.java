@@ -25,7 +25,7 @@ public class AuthService {
     public RegisterResponse register(RegisterRequest registerRequest) {
         userService.validateUser(registerRequest.username(), registerRequest.email());
 
-        User user = userService.registerUser(registerRequest);
+        User user = authMapper.mapToUser(registerRequest);
         log.info("User {} registered successfully.", user.getId());
 
         String token = jwtUtil.generateToken(user);
@@ -40,6 +40,7 @@ public class AuthService {
         }
 
         String token = jwtUtil.generateToken(user);
+        log.info("User {} logged in.", user.getId());
         return new LoginResponse(token);
     }
 
