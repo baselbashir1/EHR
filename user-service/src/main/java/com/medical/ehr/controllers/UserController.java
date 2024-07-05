@@ -26,6 +26,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
+    @GetMapping("/showUsers")
+    public ResponseEntity<Object> showUsers() {
+        return new ResponseEntity<>(userService.showUsers(), HttpStatus.OK);
+    }
+
     @PostMapping("/addUser")
     public ResponseEntity<Object> addUser(@RequestBody AddUserRequest addUserRequest) {
         userService.addUser(addUserRequest);
@@ -43,4 +48,11 @@ public class UserController {
         userService.deleteUser(userId);
         return new ResponseEntity<>("User deleted successfully.", HttpStatus.OK);
     }
+
+    @PostMapping("/editProfile")
+    public ResponseEntity<Object> editProfile(@RequestBody EditUserRequest editUserRequest) {
+        userService.editProfile(editUserRequest);
+        return new ResponseEntity<>("Profile updated successfully.", HttpStatus.OK);
+    }
+
 }

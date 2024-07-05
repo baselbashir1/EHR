@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final AuthMapper authMapper;
 
+    @Transactional
     public RegisterResponse register(RegisterRequest registerRequest) {
         userService.validateUser(registerRequest.username(), registerRequest.email());
 

@@ -25,7 +25,7 @@ public class SecurityLayer {
     public void authorizeAdmin() {
         UserRoleResponse userIdAndRole = getUserIdAndRoleFromToken();
         if (!userIdAndRole.role().equals(UserRole.ADMIN)) {
-            throw new IllegalArgumentException("You don't have permission to add the user.");
+            throw new IllegalArgumentException("You don't have permission to preform this action.");
         }
     }
 
