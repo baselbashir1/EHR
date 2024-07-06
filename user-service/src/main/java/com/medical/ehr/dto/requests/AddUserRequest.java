@@ -19,6 +19,9 @@ public record AddUserRequest(
         @NotNull(message = "Password is required.")
         String password,
         @NotNull(message = "Role is required.")
-        UserRole role
+        UserRole role,
+        Long clinicId,
+        String doctorSpecialty,
+        Long doctorId
 ) {
 }

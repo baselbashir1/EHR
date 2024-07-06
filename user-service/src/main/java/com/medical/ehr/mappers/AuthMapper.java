@@ -1,6 +1,7 @@
 package com.medical.ehr.mappers;
 
 import com.medical.ehr.dto.requests.RegisterRequest;
+import com.medical.ehr.dto.responses.LoginResponse;
 import com.medical.ehr.dto.responses.RegisterResponse;
 import com.medical.ehr.enums.UserRole;
 import com.medical.ehr.models.User;
@@ -25,8 +26,18 @@ public class AuthMapper {
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .role(user.getRole())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
+    public LoginResponse mapToLoginResponse(User user, String token) {
+        return LoginResponse.builder()
+                .token(token)
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .role(user.getRole())
                 .build();
     }
 
@@ -38,7 +49,7 @@ public class AuthMapper {
                 .email(registerRequest.email())
                 .password(passwordEncoder.encode(registerRequest.password()))
                 .phone(registerRequest.phone())
-                .role(UserRole.USER)
+                .role(UserRole.PATIENT)
                 .build();
         return userService.saveUser(user);
     }

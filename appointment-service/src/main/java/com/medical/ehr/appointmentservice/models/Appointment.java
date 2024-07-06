@@ -9,9 +9,9 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
-@Builder
 @Entity
 @Table(name = "appointments")
 public class Appointment {
@@ -20,8 +20,8 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "patient_id", nullable = false)
+    private Long patientId;
 
     @Column(name = "doctor_id", nullable = false)
     private Long doctorId;
@@ -31,6 +31,12 @@ public class Appointment {
 
     @Column(name = "clinic_id", nullable = false)
     private Long clinicId;
+
+    @Column(name = "appointment_date")
+    private Date appointmentDate;
+
+    @Column(name = "status")
+    private String status;
 
     @CreationTimestamp
     @Column(name = "created_at")

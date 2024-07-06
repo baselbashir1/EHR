@@ -6,7 +6,11 @@ import com.medical.ehr.dto.responses.UserResponse;
 import com.medical.ehr.dto.responses.UserRoleResponse;
 import com.medical.ehr.enums.UserRole;
 import com.medical.ehr.mappers.UserMapper;
+import com.medical.ehr.models.Doctor;
+import com.medical.ehr.models.Secretary;
 import com.medical.ehr.models.User;
+import com.medical.ehr.repositories.DoctorRepository;
+import com.medical.ehr.repositories.SecretaryRepository;
 import com.medical.ehr.repositories.UserRepository;
 import com.medical.ehr.utils.SecurityLayer;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,8 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final DoctorRepository doctorRepository;
+    private final SecretaryRepository secretaryRepository;
     private final UserMapper userMapper;
     private final SecurityLayer securityLayer;
 
@@ -104,6 +110,7 @@ public class UserService implements UserDetailsService {
         validateUser(addUserRequest.username(), addUserRequest.email());
         User user = userMapper.mapToUser(addUserRequest);
         User savedUser = userRepository.save(user);
+        insertUserToTargetTable(user, addUserRequest);
         log.info("User {} added successfully.", savedUser.getId());
     }
 
@@ -136,6 +143,27 @@ public class UserService implements UserDetailsService {
         userMapper.mapToUser(user, editUserRequest);
         userRepository.save(user);
         log.info("Profile updated successfully.");
+    }
+
+    public void insertUserToTargetTable(User user, AddUserRequest addUserRequest) {
+        if (addUserRequest.role().equals(UserRole.DOCTOR)) {
+            Doctor doctor = Doctor.builder()
+                    .specialty(addUserRequest.doctorSpecialty())
+                    .clinicId(addUserRequest.clinicId())
+                    .user(user)
+                    .build();
+            doctorRepository.save(doctor);
+            log.info("Doctor added successfully.");
+        }
+
+        if (addUserRequest.role().equals(UserRole.SECRETARY)) {
+            Secretary secretary = Secretary.builder()
+                    .doctorId(addUserRequest.doctorId())
+                    .user(user)
+                    .build();
+            secretaryRepository.save(secretary);
+            log.info("Secretary added successfully.");
+        }
     }
 
 }

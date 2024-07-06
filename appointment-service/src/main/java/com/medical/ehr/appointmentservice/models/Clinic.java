@@ -9,9 +9,9 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
-@Builder
 @Entity
 @Table(name = "clinics")
 public class Clinic {
@@ -23,11 +23,11 @@ public class Clinic {
     @Column(name = "name", nullable = false)
     private Long name;
 
-    @Column(name = "doctor_id", nullable = false)
-    private Long doctorId;
+    @Column(name = "address", nullable = false)
+    private String address;
 
-    @Column(name = "secretary_id", nullable = false)
-    private Long secretaryId;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @CreationTimestamp
     @Column(name = "created_at")

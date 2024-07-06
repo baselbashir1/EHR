@@ -3,8 +3,6 @@ package com.medical.ehr.dto.responses;
 import com.medical.ehr.enums.UserRole;
 import lombok.Builder;
 
-import java.util.Date;
-
 @Builder
 public record RegisterResponse(
         String token,
@@ -13,8 +11,6 @@ public record RegisterResponse(
         String username,
         String email,
         String phone,
-        UserRole role,
-        Date createdAt,
-        Date updatedAt
+        UserRole role
 ) {
 }

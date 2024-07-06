@@ -43,7 +43,7 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(user);
         log.info("User {} logged in.", user.getId());
-        return new LoginResponse(token);
+        return authMapper.mapToLoginResponse(user, token);
     }
 
 }
