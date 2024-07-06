@@ -5,7 +5,6 @@ import com.medical.ehr.dto.responses.LoginResponse;
 import com.medical.ehr.dto.responses.RegisterResponse;
 import com.medical.ehr.enums.UserRole;
 import com.medical.ehr.models.User;
-import com.medical.ehr.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthMapper {
 
-    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     public RegisterResponse mapToRegisterResponse(User user, String token) {
@@ -42,7 +40,7 @@ public class AuthMapper {
     }
 
     public User mapToUser(RegisterRequest registerRequest) {
-        User user = User.builder()
+        return User.builder()
                 .firstname(registerRequest.firstname())
                 .lastname(registerRequest.lastname())
                 .username(registerRequest.username())
@@ -51,7 +49,6 @@ public class AuthMapper {
                 .phone(registerRequest.phone())
                 .role(UserRole.PATIENT)
                 .build();
-        return userService.saveUser(user);
     }
 
 }

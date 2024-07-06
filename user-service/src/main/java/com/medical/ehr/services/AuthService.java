@@ -27,7 +27,7 @@ public class AuthService {
     public RegisterResponse register(RegisterRequest registerRequest) {
         userService.validateUser(registerRequest.username(), registerRequest.email());
 
-        User user = authMapper.mapToUser(registerRequest);
+        User user = userService.saveUser(authMapper.mapToUser(registerRequest));
         log.info("User {} registered successfully.", user.getId());
 
         String token = jwtUtil.generateToken(user);

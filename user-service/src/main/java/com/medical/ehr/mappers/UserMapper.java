@@ -3,6 +3,8 @@ package com.medical.ehr.mappers;
 import com.medical.ehr.dto.requests.AddUserRequest;
 import com.medical.ehr.dto.requests.EditUserRequest;
 import com.medical.ehr.dto.responses.UserResponse;
+import com.medical.ehr.models.Doctor;
+import com.medical.ehr.models.Secretary;
 import com.medical.ehr.models.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -59,6 +61,21 @@ public class UserMapper {
         user.setPhone(editUserRequest.phone());
         user.setPassword(passwordEncoder.encode(editUserRequest.password()));
         user.setRole(editUserRequest.role());
+    }
+
+    public Doctor mapToDoctor(User user, AddUserRequest addUserRequest) {
+        return Doctor.builder()
+                .specialty(addUserRequest.doctorSpecialty())
+                .clinicId(addUserRequest.clinicId())
+                .user(user)
+                .build();
+    }
+
+    public Secretary mapToSecretary(User user, AddUserRequest addUserRequest) {
+        return Secretary.builder()
+                .doctorId(addUserRequest.doctorId())
+                .user(user)
+                .build();
     }
 
 }

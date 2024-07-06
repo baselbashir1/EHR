@@ -34,7 +34,6 @@ public class UserService implements UserDetailsService {
     private final UserMapper userMapper;
     private final SecurityLayer securityLayer;
 
-    @Transactional
     public User saveUser(User user) {
         return userRepository.save(userMapper.mapToUser(user));
     }
@@ -101,7 +100,7 @@ public class UserService implements UserDetailsService {
 //            return getUsersForSecretaryRelatedToDoctor(userId);
 //        }
 
-        return null;
+        return List.of();
     }
 
     @Transactional
@@ -147,20 +146,13 @@ public class UserService implements UserDetailsService {
 
     public void insertUserToTargetTable(User user, AddUserRequest addUserRequest) {
         if (addUserRequest.role().equals(UserRole.DOCTOR)) {
-            Doctor doctor = Doctor.builder()
-                    .specialty(addUserRequest.doctorSpecialty())
-                    .clinicId(addUserRequest.clinicId())
-                    .user(user)
-                    .build();
+            Doctor doctor = userMapper.mapToDoctor(user, addUserRequest);
             doctorRepository.save(doctor);
             log.info("Doctor added successfully.");
         }
 
         if (addUserRequest.role().equals(UserRole.SECRETARY)) {
-            Secretary secretary = Secretary.builder()
-                    .doctorId(addUserRequest.doctorId())
-                    .user(user)
-                    .build();
+            Secretary secretary = userMapper.mapToSecretary(user, addUserRequest);
             secretaryRepository.save(secretary);
             log.info("Secretary added successfully.");
         }
