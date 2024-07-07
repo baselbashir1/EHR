@@ -8,16 +8,22 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="clinic-service" />
+        <module name="api-gateway" />
         <module name="user-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="api-gatway" target="17" />
       <module name="appointment-service" target="17" />
+      <module name="demo" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="-parameters" />
+      <module name="api-gatway" options="-parameters" />
       <module name="clinic-service" options="-parameters" />
+      <module name="demo" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>
