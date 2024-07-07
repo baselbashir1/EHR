@@ -28,6 +28,12 @@ public class AuthController {
         return new ResponseEntity<>(authService.login(loginRequest), HttpStatus.OK);
     }
 
+    @GetMapping("/checkAdminPermission")
+    public ResponseEntity<Object> checkAdminPermission() {
+        securityLayer.authorizeAdmin();
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/getUserIdAndRoleFromToken")
     public ResponseEntity<Object> getUserIdAndRoleFromToken() {
         return new ResponseEntity<>(securityLayer.getUserIdAndRoleFromToken(), HttpStatus.OK);

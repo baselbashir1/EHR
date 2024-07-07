@@ -3,19 +3,15 @@ package com.medical.ehr.services;
 import com.medical.ehr.dto.requests.AddClinicRequest;
 import com.medical.ehr.dto.requests.EditClinicRequest;
 import com.medical.ehr.dto.responses.ClinicResponse;
-import com.medical.ehr.dto.responses.UserRoleResponse;
-import com.medical.ehr.enums.UserRole;
 import com.medical.ehr.mappers.ClinicMapper;
 import com.medical.ehr.models.Clinic;
 import com.medical.ehr.repositories.ClinicRepository;
-import com.medical.ehr.utils.SecurityLayer;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +22,6 @@ public class ClinicService {
 
     private final ClinicRepository clinicRepository;
     private final ClinicMapper clinicMapper;
-    private final SecurityLayer securityLayer;
 
     public Clinic saveClinic(Clinic clinic) {
         return clinicRepository.save(clinic);
@@ -37,6 +32,7 @@ public class ClinicService {
         return clinicMapper.mapToClinicResponse(clinic);
     }
 
+    @Transactional(readOnly = true)
     public List<ClinicResponse> getAllClinics() {
         return clinicRepository.findAll()
                 .stream()
@@ -44,22 +40,8 @@ public class ClinicService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public List<ClinicResponse> showClinics() {
-        UserRoleResponse userIdAndRole = securityLayer.getUserIdAndRoleFromToken();
-        Long userId = userIdAndRole.userId();
-        UserRole userRole = userIdAndRole.role();
-
-        if (EnumSet.of(UserRole.ADMIN, UserRole.PATIENT).contains(userRole)) {
-            return getAllClinics();
-        }
-
-        return List.of();
-    }
-
     @Transactional
     public void addClinic(AddClinicRequest addClinicRequest) {
-        securityLayer.authorizeAdmin();
         validateClinic(addClinicRequest.name());
         Clinic clinic = clinicMapper.mapToClinic(addClinicRequest);
         Clinic addedClinic = saveClinic(clinic);
@@ -68,7 +50,6 @@ public class ClinicService {
 
     @Transactional
     public void editClinic(EditClinicRequest editClinicRequest, Long clinicId) {
-        securityLayer.authorizeAdmin();
         Clinic clinic = clinicRepository.findById(clinicId)
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found."));
         validateClinic(editClinicRequest.name());
@@ -79,7 +60,6 @@ public class ClinicService {
 
     @Transactional
     public void deleteClinic(Long clinicId) {
-        securityLayer.authorizeAdmin();
         Clinic clinic = clinicRepository.findById(clinicId)
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found."));
         clinicRepository.delete(clinic);

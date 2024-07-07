@@ -21,9 +21,9 @@ public class ClinicController {
         return new ResponseEntity<>(clinicService.getClinicByName(name), HttpStatus.OK);
     }
 
-    @GetMapping("/showClinics")
-    public ResponseEntity<Object> showClinics() {
-        return new ResponseEntity<>(clinicService.showClinics(), HttpStatus.OK);
+    @GetMapping("/getAllClinics")
+    public ResponseEntity<Object> getAllClinics() {
+        return new ResponseEntity<>(clinicService.getAllClinics(), HttpStatus.OK);
     }
 
     @PostMapping("/addClinic")
