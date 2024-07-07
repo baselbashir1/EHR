@@ -18,6 +18,7 @@ public class AuthMapper {
     public RegisterResponse mapToRegisterResponse(User user, String token) {
         return RegisterResponse.builder()
                 .token(token)
+                .userId(user.getId())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .username(user.getUsername())
@@ -30,6 +31,7 @@ public class AuthMapper {
     public LoginResponse mapToLoginResponse(User user, String token) {
         return LoginResponse.builder()
                 .token(token)
+                .userId(user.getId())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .username(user.getUsername())

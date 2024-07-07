@@ -18,6 +18,7 @@ public class UserMapper {
 
     public UserResponse mapToUserResponse(User user) {
         return UserResponse.builder()
+                .userId(user.getId())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
                 .username(user.getUsername())
@@ -26,18 +27,6 @@ public class UserMapper {
                 .role(user.getRole())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
-                .build();
-    }
-
-    public User mapToUser(User user) {
-        return User.builder()
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .phone(user.getPhone())
-                .role(user.getRole())
                 .build();
     }
 
@@ -53,7 +42,7 @@ public class UserMapper {
                 .build();
     }
 
-    public void mapToUser(User user, EditUserRequest editUserRequest) {
+    public User mapToUser(User user, EditUserRequest editUserRequest) {
         user.setFirstname(editUserRequest.firstname());
         user.setLastname(editUserRequest.lastname());
         user.setUsername(editUserRequest.username());
@@ -61,6 +50,7 @@ public class UserMapper {
         user.setPhone(editUserRequest.phone());
         user.setPassword(passwordEncoder.encode(editUserRequest.password()));
         user.setRole(editUserRequest.role());
+        return user;
     }
 
     public Doctor mapToDoctor(User user, AddUserRequest addUserRequest) {

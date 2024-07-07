@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
     private final SecurityLayer securityLayer;
 
     public User saveUser(User user) {
-        return userRepository.save(userMapper.mapToUser(user));
+        return userRepository.save(user);
     }
 
     @Override
@@ -108,9 +108,9 @@ public class UserService implements UserDetailsService {
         securityLayer.authorizeAdmin();
         validateUser(addUserRequest.username(), addUserRequest.email());
         User user = userMapper.mapToUser(addUserRequest);
-        User savedUser = userRepository.save(user);
+        User addedUser = saveUser(user);
         insertUserToTargetTable(user, addUserRequest);
-        log.info("User {} added successfully.", savedUser.getId());
+        log.info("User {} added successfully.", addedUser.getId());
     }
 
     @Transactional
@@ -119,9 +119,9 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
         validateUser(editUserRequest.username(), editUserRequest.email());
-        userMapper.mapToUser(user, editUserRequest);
-        userRepository.save(user);
-        log.info("User {} updated successfully.", user.getId());
+        User updatedUser = userMapper.mapToUser(user, editUserRequest);
+        saveUser(updatedUser);
+        log.info("User {} updated successfully.", updatedUser.getId());
     }
 
     @Transactional
@@ -139,8 +139,8 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userIdAndRole.userId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
         validateUser(editUserRequest.username(), editUserRequest.email());
-        userMapper.mapToUser(user, editUserRequest);
-        userRepository.save(user);
+        User updatedUser = userMapper.mapToUser(user, editUserRequest);
+        saveUser(updatedUser);
         log.info("Profile updated successfully.");
     }
 

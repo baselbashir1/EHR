@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Builder
 public record UserResponse(
+        Long userId,
         String firstname,
         String lastname,
         String username,
