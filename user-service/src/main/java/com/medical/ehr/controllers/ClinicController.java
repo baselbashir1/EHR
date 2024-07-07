@@ -23,7 +23,7 @@ public class ClinicController {
 
     @GetMapping("/showClinics")
     public ResponseEntity<Object> showClinics() {
-        return new ResponseEntity<>(clinicService.getAllClinics(), HttpStatus.OK);
+        return new ResponseEntity<>(clinicService.showClinics(), HttpStatus.OK);
     }
 
     @PostMapping("/addClinic")
