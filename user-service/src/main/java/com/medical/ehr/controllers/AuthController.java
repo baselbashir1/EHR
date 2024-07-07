@@ -7,6 +7,7 @@ import com.medical.ehr.utils.SecurityLayer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +31,7 @@ public class AuthController {
 
     @GetMapping("/checkAdminPermission")
     public ResponseEntity<Object> checkAdminPermission() {
+        System.out.println("Token received: " + SecurityContextHolder.getContext().getAuthentication().getCredentials()); // Debugging line
         securityLayer.authorizeAdmin();
         return ResponseEntity.ok().build();
     }
