@@ -1,13 +1,11 @@
 package com.medical.ehr.clients;
 
 import com.medical.ehr.dto.requests.AddClinicRequest;
+import com.medical.ehr.dto.requests.EditClinicRequest;
 import com.medical.ehr.dto.responses.ClinicResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "clinic-service", url = "${clinic.service.url}")
 public interface ClinicServiceClient {
@@ -17,5 +15,11 @@ public interface ClinicServiceClient {
 
     @PostMapping("/addClinic")
     ResponseEntity<String> addClinic(@RequestBody AddClinicRequest addClinicRequest);
+
+    @PostMapping("/editClinic/{clinicId}")
+    ResponseEntity<String> editClinic(@RequestBody EditClinicRequest editClinicRequest, @PathVariable("clinicId") Long clinicId);
+
+    @DeleteMapping("/deleteClinic/{clinicId}")
+    ResponseEntity<String> deleteClinic(@PathVariable("clinicId") Long clinicId);
 
 }

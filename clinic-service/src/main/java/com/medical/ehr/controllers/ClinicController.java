@@ -16,7 +16,7 @@ public class ClinicController {
     private final ClinicService clinicService;
 
     @GetMapping("/getByName")
-    public ResponseEntity<Object> getByName(@RequestParam String name) {
+    public ResponseEntity<Object> getByName(@RequestParam("name") String name) {
         return new ResponseEntity<>(clinicService.getClinicByName(name), HttpStatus.OK);
     }
 

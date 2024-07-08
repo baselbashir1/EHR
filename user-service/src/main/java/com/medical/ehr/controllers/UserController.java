@@ -16,12 +16,12 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/getByEmail")
-    public ResponseEntity<Object> getUserByEmail(@RequestParam String email) {
+    public ResponseEntity<Object> getUserByEmail(@RequestParam("email") String email) {
         return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/getByUsername")
-    public ResponseEntity<Object> getUserByUsername(@RequestParam String username) {
+    public ResponseEntity<Object> getUserByUsername(@RequestParam("username") String username) {
         return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 
