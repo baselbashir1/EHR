@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ClinicMapper {
 
-    public Clinic mapToClinic(AddClinicRequest clinicRequest) {
+    public Clinic mapToClinic(AddClinicRequest addClinicRequest) {
         return Clinic.builder()
-                .name(clinicRequest.name())
-                .address(clinicRequest.address())
-                .phoneNumber(clinicRequest.phoneNumber())
+                .name(addClinicRequest.name())
+                .address(addClinicRequest.address())
+                .phoneNumber(addClinicRequest.phoneNumber())
                 .build();
     }
 

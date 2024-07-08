@@ -22,7 +22,6 @@ public class ClinicService {
 
     private final ClinicRepository clinicRepository;
     private final ClinicMapper clinicMapper;
-    private final UserServiceClient userServiceClient;
 
     public Clinic saveClinic(Clinic clinic) {
         return clinicRepository.save(clinic);
@@ -30,7 +29,11 @@ public class ClinicService {
 
     public ClinicResponse getClinicByName(String name) {
         Clinic clinic = clinicRepository.findByName(name);
-        return clinicMapper.mapToClinicResponse(clinic);
+        if (clinic != null) {
+            return clinicMapper.mapToClinicResponse(clinic);
+        } else {
+            throw new EntityNotFoundException("Clinic not found.");
+        }
     }
 
     @Transactional(readOnly = true)
@@ -43,7 +46,6 @@ public class ClinicService {
 
     @Transactional
     public void addClinic(AddClinicRequest addClinicRequest) {
-        userServiceClient.checkAdminPermission();
         validateClinic(addClinicRequest.name());
         Clinic clinic = clinicMapper.mapToClinic(addClinicRequest);
         Clinic addedClinic = saveClinic(clinic);
@@ -52,7 +54,6 @@ public class ClinicService {
 
     @Transactional
     public void editClinic(EditClinicRequest editClinicRequest, Long clinicId) {
-        userServiceClient.checkAdminPermission();
         Clinic clinic = clinicRepository.findById(clinicId)
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found."));
         validateClinic(editClinicRequest.name());
@@ -63,7 +64,6 @@ public class ClinicService {
 
     @Transactional
     public void deleteClinic(Long clinicId) {
-        userServiceClient.checkAdminPermission();
         Clinic clinic = clinicRepository.findById(clinicId)
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found."));
         clinicRepository.delete(clinic);
