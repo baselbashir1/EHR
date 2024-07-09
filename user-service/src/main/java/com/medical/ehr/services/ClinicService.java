@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -24,6 +26,16 @@ public class ClinicService {
             return clinicServiceClient.getClinicByName(name).getBody();
         } catch (Exception e) {
             clientException.handle(e, "Clinic");
+            throw e;
+        }
+    }
+
+    public List<ClinicResponse> showClinics() {
+        try {
+            securityLayer.authorizeAdmin();
+            return clinicServiceClient.getAllClinics().getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
             throw e;
         }
     }

@@ -20,6 +20,11 @@ public class ClinicController {
         return new ResponseEntity<>(clinicService.getClinicByName(name), HttpStatus.OK);
     }
 
+    @GetMapping("/showClinics")
+    public ResponseEntity<Object> showClinics() {
+        return new ResponseEntity<>(clinicService.showClinics(), HttpStatus.OK);
+    }
+
     @PostMapping("/addClinic")
     public ResponseEntity<Object> addClinic(@RequestBody AddClinicRequest addClinicRequest) {
         return new ResponseEntity<>(clinicService.addClinic(addClinicRequest), HttpStatus.CREATED);
