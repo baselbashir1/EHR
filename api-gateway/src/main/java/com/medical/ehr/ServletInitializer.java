@@ -1,4 +1,4 @@
-package com.example.ehr;
+package com.medical.ehr;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

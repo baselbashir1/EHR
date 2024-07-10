@@ -18,7 +18,7 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthFilter jwtAuthFilter;
 
-    private final String[] PUBLIC_ENDPOINTS = {"/login", "/register"};
+    private final String[] PUBLIC_ENDPOINTS = {"/auth/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

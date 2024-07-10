@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -38,6 +39,11 @@ public class AuthController {
     @GetMapping("/getUserIdAndRoleFromToken")
     public ResponseEntity<Object> getUserIdAndRoleFromToken() {
         return new ResponseEntity<>(securityLayer.getUserIdAndRoleFromToken(), HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Object> test() {
+        return new ResponseEntity<>("test", HttpStatus.OK);
     }
 
 }

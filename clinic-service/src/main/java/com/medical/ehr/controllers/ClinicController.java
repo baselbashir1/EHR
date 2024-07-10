@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/clinic")
 @RequiredArgsConstructor
 public class ClinicController {
 
@@ -41,6 +42,11 @@ public class ClinicController {
     public ResponseEntity<Object> deleteClinic(@PathVariable("clinicId") Long clinicId) {
         clinicService.deleteClinic(clinicId);
         return new ResponseEntity<>("Clinic deleted successfully.", HttpStatus.OK);
+    }
+
+    @GetMapping("/new")
+    public ResponseEntity<Object> ss(@RequestHeader("loggedInUser") String username) {
+        return new ResponseEntity<>("logged in user details: " + username, HttpStatus.OK);
     }
 
 }
