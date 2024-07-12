@@ -34,7 +34,7 @@ public class JwtUtil {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsernameFormToken(token);
+        final String username = extractUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
@@ -46,7 +46,7 @@ public class JwtUtil {
         return extractClaims(token, Claims::getExpiration);
     }
 
-    public String extractUsernameFormToken(String token) {
+    public String extractUsernameFromToken(String token) {
         return extractClaims(token, Claims::getSubject);
     }
 
