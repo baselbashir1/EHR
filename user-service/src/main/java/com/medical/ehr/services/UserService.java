@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
     private final UserMapper userMapper;
     private final SecurityLayer securityLayer;
 
-    public User saveUser(User user) {
+    public User save(User user) {
         return userRepository.save(user);
     }
 
@@ -108,7 +108,7 @@ public class UserService implements UserDetailsService {
         securityLayer.authorizeAdmin();
         validateUser(addUserRequest.username(), addUserRequest.email());
         User user = userMapper.mapToUser(addUserRequest);
-        User addedUser = saveUser(user);
+        User addedUser = save(user);
         insertUserToTargetTable(user, addUserRequest);
         log.info("User {} added successfully.", addedUser.getId());
     }
@@ -120,7 +120,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
         validateUser(editUserRequest.username(), editUserRequest.email());
         User updatedUser = userMapper.mapToUser(user, editUserRequest);
-        saveUser(updatedUser);
+        save(updatedUser);
         log.info("User {} updated successfully.", updatedUser.getId());
     }
 
@@ -140,7 +140,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
         validateUser(editUserRequest.username(), editUserRequest.email());
         User updatedUser = userMapper.mapToUser(user, editUserRequest);
-        saveUser(updatedUser);
+        save(updatedUser);
         log.info("Profile updated successfully.");
     }
 
