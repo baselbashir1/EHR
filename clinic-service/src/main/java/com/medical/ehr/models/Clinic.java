@@ -2,10 +2,6 @@ package com.medical.ehr.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,11 +10,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "clinics")
-public class Clinic {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Clinic extends BaseModel {
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
@@ -28,13 +20,5 @@ public class Clinic {
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
-
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private Date createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private Date updatedAt;
 
 }

@@ -23,10 +23,6 @@ public class ClinicService {
     private final ClinicRepository clinicRepository;
     private final ClinicMapper clinicMapper;
 
-    public Clinic save(Clinic clinic) {
-        return clinicRepository.save(clinic);
-    }
-
     public ClinicResponse getClinicByName(String name) {
         Clinic clinic = clinicRepository.findByName(name);
         if (clinic != null) {
@@ -48,7 +44,7 @@ public class ClinicService {
     public void addClinic(AddClinicRequest addClinicRequest) {
         validateClinic(addClinicRequest.name());
         Clinic clinic = clinicMapper.mapToClinic(addClinicRequest);
-        Clinic addedClinic = save(clinic);
+        Clinic addedClinic = clinicRepository.save(clinic);
         log.info("Clinic {} added successfully.", addedClinic.getId());
     }
 
@@ -58,7 +54,7 @@ public class ClinicService {
                 .orElseThrow(() -> new EntityNotFoundException("Clinic not found."));
         validateClinic(editClinicRequest.name());
         Clinic updatedClinic = clinicMapper.mapToClinic(clinic, editClinicRequest);
-        save(updatedClinic);
+        clinicRepository.save(updatedClinic);
         log.info("Clinic {} updated successfully.", updatedClinic.getId());
     }
 

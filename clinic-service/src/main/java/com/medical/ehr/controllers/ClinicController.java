@@ -3,6 +3,7 @@ package com.medical.ehr.controllers;
 import com.medical.ehr.dto.requests.AddClinicRequest;
 import com.medical.ehr.dto.requests.EditClinicRequest;
 import com.medical.ehr.services.ClinicService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ClinicController {
     }
 
     @PostMapping("/addClinic")
-    public ResponseEntity<Object> addClinic(@RequestBody AddClinicRequest clinicRequest) {
+    public ResponseEntity<Object> addClinic(@Valid @RequestBody AddClinicRequest clinicRequest) {
         clinicService.addClinic(clinicRequest);
         return new ResponseEntity<>("Clinic added successfully.", HttpStatus.CREATED);
     }
@@ -42,11 +43,6 @@ public class ClinicController {
     public ResponseEntity<Object> deleteClinic(@PathVariable("clinicId") Long clinicId) {
         clinicService.deleteClinic(clinicId);
         return new ResponseEntity<>("Clinic deleted successfully.", HttpStatus.OK);
-    }
-
-    @GetMapping("/new")
-    public ResponseEntity<Object> ss(@RequestHeader("loggedInUser") String username) {
-        return new ResponseEntity<>("logged in user details: " + username, HttpStatus.OK);
     }
 
 }
