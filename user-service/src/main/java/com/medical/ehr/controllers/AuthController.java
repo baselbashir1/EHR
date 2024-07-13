@@ -4,6 +4,7 @@ import com.medical.ehr.dto.requests.LoginRequest;
 import com.medical.ehr.dto.requests.RegisterRequest;
 import com.medical.ehr.services.AuthService;
 import com.medical.ehr.utils.SecurityLayer;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,12 @@ public class AuthController {
     private final SecurityLayer securityLayer;
 
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<Object> register(@Valid @RequestBody RegisterRequest registerRequest) {
         return new ResponseEntity<>(authService.register(registerRequest), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest loginRequest) {
         return new ResponseEntity<>(authService.login(loginRequest), HttpStatus.OK);
     }
 
@@ -39,11 +40,6 @@ public class AuthController {
     @GetMapping("/getUserIdAndRoleFromToken")
     public ResponseEntity<Object> getUserIdAndRoleFromToken() {
         return new ResponseEntity<>(securityLayer.getUserIdAndRoleFromToken(), HttpStatus.OK);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<Object> test() {
-        return new ResponseEntity<>("test", HttpStatus.OK);
     }
 
 }

@@ -25,8 +25,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .role(user.getRole())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
+                .status(user.getStatus())
                 .build();
     }
 
@@ -39,6 +38,7 @@ public class UserMapper {
                 .password(passwordEncoder.encode(addUserRequest.password()))
                 .phone(addUserRequest.phone())
                 .role(addUserRequest.role())
+                .status(addUserRequest.status())
                 .build();
     }
 
@@ -50,6 +50,7 @@ public class UserMapper {
         user.setPhone(editUserRequest.phone());
         user.setPassword(passwordEncoder.encode(editUserRequest.password()));
         user.setRole(editUserRequest.role());
+        user.setStatus(editUserRequest.status());
         return user;
     }
 

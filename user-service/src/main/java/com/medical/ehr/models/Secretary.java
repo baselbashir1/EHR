@@ -10,11 +10,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "secretaries")
-public class Secretary {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Secretary extends BaseModel {
 
     @Column(name = "doctor_id")
     private Long doctorId;

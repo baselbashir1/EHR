@@ -1,6 +1,7 @@
 package com.medical.ehr.dto.responses;
 
 import com.medical.ehr.enums.UserRole;
+import com.medical.ehr.enums.UserStatus;
 import lombok.Builder;
 
 import java.util.Date;
@@ -14,7 +15,6 @@ public record UserResponse(
         String email,
         String phone,
         UserRole role,
-        Date createdAt,
-        Date updatedAt
+        UserStatus status
 ) {
 }

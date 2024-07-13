@@ -4,6 +4,7 @@ import com.medical.ehr.dto.requests.RegisterRequest;
 import com.medical.ehr.dto.responses.LoginResponse;
 import com.medical.ehr.dto.responses.RegisterResponse;
 import com.medical.ehr.enums.UserRole;
+import com.medical.ehr.enums.UserStatus;
 import com.medical.ehr.models.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ public class AuthMapper {
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .role(user.getRole())
+                .status(user.getStatus())
                 .build();
     }
 
@@ -38,6 +40,7 @@ public class AuthMapper {
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .role(user.getRole())
+                .status(user.getStatus())
                 .build();
     }
 
@@ -50,6 +53,7 @@ public class AuthMapper {
                 .password(passwordEncoder.encode(registerRequest.password()))
                 .phone(registerRequest.phone())
                 .role(UserRole.PATIENT)
+                .status(UserStatus.ACTIVE)
                 .build();
     }
 
